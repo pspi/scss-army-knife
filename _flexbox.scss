@@ -1,0 +1,41 @@
+$scss-army-knife-flexbox-alignments: flex-start flex-end center stretch baseline;
+$scss-army-knife-flexbox-justifications: flex-start flex-end center space-between space-around;
+
+@each $direction in row column {
+    .flex-#{$direction} {
+        @include display-flex;
+        @include flex-direction($direction);
+    }
+    @each $justify in $scss-army-knife-flexbox-justifications {
+        .flex-#{$direction}-#{$justify} {
+            @include display-flex;
+            @include flex-direction($direction);
+            @include justify-content($justify);
+        }
+        @each $align in $scss-army-knife-flexbox-alignments {
+            .flex-#{$direction}-#{$justify}-items-#{$align} {
+                @include display-flex;
+                @include flex-direction($direction);
+                @include justify-content($justify);
+                @include align-items($align);
+            }
+        }
+    }
+    @each $align in $scss-army-knife-flexbox-alignments {
+        .flex-#{$direction}-items-#{$align} {
+            @include display-flex;
+            @include flex-direction($direction);
+            @include align-items($align);
+        }
+    }
+}
+
+@each $align in $scss-army-knife-flexbox-alignments {
+    .flex-item-#{$align} {
+        @include align-self($align);
+    }
+}
+
+.flex-item-grow {
+    @include flex-grow(1);
+}
