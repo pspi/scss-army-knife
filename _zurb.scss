@@ -1,0 +1,46 @@
+$scss-army-knife-padding-unit: 2em;
+
+@for $i from 1 through 8 {
+    .padding-#{$i}x {
+        & > .row, & > .columns {
+            padding-bottom: $i * $scss-army-knife-padding-unit;
+            padding-top: $i * $scss-army-knife-padding-unit;
+        }
+        & > .row + .row, & > .columns + .columns {
+            padding-top: 0;
+        }
+    }
+}
+
+.padding {
+    @extend .padding-1x;
+}
+
+.nopad {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+hr {
+    margin: 0;
+}
+
+.circle {
+    width: 8em;
+    height: 8em;
+    background-color: #ccc;
+    border-radius: 4em;
+    display: inline-block;
+    margin-bottom: 1em;
+    // line-height: 8em;
+    i.fa {
+        font-size: 3em;
+        margin-top: 0.85em;
+        // margin-bottom: 2em;
+
+    }
+}
+
+.panel.white {
+    background-color: white;
+}
