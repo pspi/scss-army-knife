@@ -1,0 +1,10 @@
+// usage example: @include retina-background-image('/images/cross', 'png');
+@mixin retina-background-image($image, $ext) {
+    $lr-image: $image + "." + $ext;
+    $hr-image: $image + "@2x." + $ext;
+    background-image: url($lr-image);
+    @media print, (-webkit-min-device-pixel-ratio: 1.25), (-o-min-device-pixel-ratio: 5 / 4), (min-resolution: 120dppx) {
+        background-image: url($hr-image);
+        background-size: image-width($lr-image) image-height($lr-image);
+    }
+}
