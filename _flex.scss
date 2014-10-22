@@ -10,15 +10,12 @@ $scss-army-knife-flex-justifications: flex-start flex-end center space-between s
     }
     @each $justify in $scss-army-knife-flex-justifications {
         .flex-#{$direction}-#{$justify} {
-            @include display-flex;
-            @include flex-direction($direction);
+            @extend .flex-#{$direction};
             @include justify-content($justify);
         }
         @each $align in $scss-army-knife-flex-alignments {
             .flex-#{$direction}-#{$justify}-items-#{$align} {
-                @include display-flex;
-                @include flex-direction($direction);
-                @include justify-content($justify);
+                @extend .flex-#{$direction}-#{$justify};
                 @include align-items($align);
             }
         }
@@ -26,15 +23,12 @@ $scss-army-knife-flex-justifications: flex-start flex-end center space-between s
     .flex-#{$direction}-items-equal {
         @extend .flex-#{$direction};
         & > * {
-            @include flex-grow(1);
-            @include flex-shrink(0);
-            @include flex-basis(0);
+            @extend .flex-item-grow-1;
         }
     }
     @each $align in $scss-army-knife-flex-alignments {
         .flex-#{$direction}-items-#{$align} {
-            @include display-flex;
-            @include flex-direction($direction);
+            @extend .flex-#{$direction};
             @include align-items($align);
         }
     }
