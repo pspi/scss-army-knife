@@ -40,6 +40,14 @@ $scss-army-knife-flex-justifications: flex-start flex-end center space-between s
     }
 }
 
+@for $i from 1 through 12 {
+    .flex-item-grow-#{$i} {
+        @include flex-grow($i);
+        @include flex-shrink(0);
+        @include flex-basis(0);
+    }
+}
+
 .flex-item-grow {
-    @include flex-grow(1);
+    @extend .flex-item-grow-1;
 }
