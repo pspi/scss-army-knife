@@ -1,0 +1,7 @@
+@import "compass/css3/columns";
+
+@for $i from 2 through 4 {
+    .columns-#{$i} {
+        @include column-count($i);
+    }
+}
