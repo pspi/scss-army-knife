@@ -3,11 +3,25 @@
 $scss-army-knife-flex-alignments: flex-start flex-end center stretch baseline;
 $scss-army-knife-flex-justifications: flex-start flex-end center space-between space-around;
 
+.flex-row {
+    @include display-flex;
+    @include flex-direction(row);
+    // & > * {
+    //     min-width: 0;
+    //     overflow-x: hidden;
+    // }
+}
+
+.flex-column {
+    @include display-flex;
+    @include flex-direction(column);
+    // & > * {
+    //     min-height: 0;
+    //     overflow-y: hidden;
+    // }
+}
+
 @each $direction in row column {
-    .flex-#{$direction} {
-        @include display-flex;
-        @include flex-direction($direction);
-    }
     @each $justify in $scss-army-knife-flex-justifications {
         .flex-#{$direction}-#{$justify} {
             @extend .flex-#{$direction};
@@ -18,12 +32,6 @@ $scss-army-knife-flex-justifications: flex-start flex-end center space-between s
                 @extend .flex-#{$direction}-#{$justify};
                 @include align-items($align);
             }
-        }
-    }
-    .flex-#{$direction}-items-equal {
-        @extend .flex-#{$direction};
-        & > * {
-            @extend .flex-item-grow-1;
         }
     }
     @each $align in $scss-army-knife-flex-alignments {
@@ -40,11 +48,18 @@ $scss-army-knife-flex-justifications: flex-start flex-end center space-between s
     }
 }
 
+.flex-item {
+    @include flex-shrink(0);
+    @include flex-basis(0);
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
 @for $i from 1 through 12 {
     .flex-item-grow-#{$i} {
+        @extend .flex-item;
         @include flex-grow($i);
-        @include flex-shrink(0);
-        @include flex-basis(0);
     }
 }
 
