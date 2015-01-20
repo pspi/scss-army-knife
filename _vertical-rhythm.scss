@@ -1,0 +1,36 @@
+
+$base-font-size: 16px;
+$base-line-height: 24px;
+@include establish-baseline;
+
+$factor: 3/4;
+
+@for $i from 6 through 1 {
+    h#{$i}, .h#{$i} {
+        @include adjust-font-size-to(pow(1/$factor, 6 - $i) * $base-font-size);
+    }
+}
+
+// test this:
+
+.small {
+    @include adjust-font-size-to(pow($factor, 1) * $base-font-size, 4/5);
+}
+
+body {
+    // @include debug-vertical-alignment;
+    // * { background-color: transparent !important; }
+}
+
+@for $i from 1 through 20 {
+    .margin-leader-#{$i} {
+        @include margin-leader($i);
+    }
+    .margin-trailer-#{$i} {
+        @include margin-trailer($i);
+    }
+    .margin-#{$i} {
+        @extend .margin-leader-#{$i};
+        @extend .margin-trailer-#{$i};
+    }
+}
