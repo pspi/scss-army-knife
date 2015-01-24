@@ -1,3 +1,6 @@
+
+// Hsv to Hsl conversion taken from:
+
 /*! hsv_to_hsl.scss | MIT License | https://gist.github.com/voxpelli/1069204 */
 
 @function max($v1, $v2) {
@@ -77,4 +80,39 @@
 @function hsv-to-color($h, $s: 0, $v: 0) {
     $hsl: hsv-to-hsl($h, $s, $v);
     @return hsl(nth($hsl, 1), nth($hsl, 2), nth($hsl, 3));
+}
+
+// Color codes and classes for text and bg
+
+// TODO: implement support this base color system, to allow generation of .base, .base-bg colors automatically
+// $color-highlight: hsv-to-color(55deg, 79%, 90%) !default;
+// $color-text-accent: hsv-to-color(55deg, 79%, 100%) !default;
+// TBD: highlight, main, accent, unshade, shade, untint, tint, etc...
+
+
+$colors: (
+    white: #fff,
+    gray-90: #e5e5e5,
+    gray-80: #ccc,
+    gray-60: #999,
+    gray-40: #666,
+    gray-20: #333,
+    gray-10: #191919,
+    // highlight: $color-highlight,
+    // text-accent: $color-text-accent
+);
+
+// extracted for own function to use outside this file
+@mixin color-class($name, $color) {
+    .#{$name} {
+        color: $color;
+    }
+
+    .#{$name}-bg {
+        background-color: $color;
+    }
+}
+
+@each $name, $color in $colors {
+    @include color-class($name, $color);
 }
