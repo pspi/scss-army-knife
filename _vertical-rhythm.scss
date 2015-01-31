@@ -1,12 +1,22 @@
 @import "compass/typography/vertical_rhythm";
 
+$textBlocks: h1, h2, h4, h5, h6, p, img, ul, ol, figure, blockquote;
+
+// Reset
+
+#{$textBlocks} {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
 $base-font-size: 16px;
 $base-line-height: 24px;
 
 
 // choose either to fix trouble with 21px h5 size
-// $min-line-padding: 1px;
-$round-to-nearest-half-line: true;
+$min-line-padding: 1px;
+// $round-to-nearest-half-line: true;
 
 $rhythm-unit: "rem";
 
@@ -21,6 +31,10 @@ $factor: 3/4;
     h#{$i}, .h#{$i} {
         @include adjust-font-size-to(pow(1/$factor, 6 - $i) * $base-font-size);
     }
+}
+
+p {
+    @include adjust-font-size-to($base-font-size);
 }
 
 .small {
@@ -67,4 +81,14 @@ $factor: 3/4;
 body {
     // @include debug-vertical-alignment;
     // * { background-color: transparent !important; }
+}
+
+// Text spacing
+
+@each $i in $textBlocks {
+    @each $j in $textBlocks {
+        #{$i} + #{$j} {
+            @include margin-leader(1);
+        }
+    }
 }
