@@ -80,6 +80,14 @@ p {
     padding: rhythm() / 2;
 }
 
+.padding-left {
+    padding-left: rhythm();
+}
+
+.padding-right {
+    padding-right: rhythm();
+}
+
 .top-open-padding {
     @extend .padding;
     padding-top: 0;
