@@ -31,6 +31,15 @@ $factor: 3/4;
     h#{$i}, .h#{$i} {
         @include adjust-font-size-to(pow(1/$factor, 6 - $i) * $base-font-size);
     }
+    .h#{$i}-vh-landscape-ipad {
+        font-size: pow(1/$factor, 6 - $i) * $base-font-size / 768px * 100vh;
+        line-height: 1.5;
+    }
+}
+
+.p-vh-landscape-ipad {
+    font-size: $base-font-size / 768px * 100vh;
+    line-height: 1.5;
 }
 
 p {
