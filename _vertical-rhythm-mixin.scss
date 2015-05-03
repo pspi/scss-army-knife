@@ -1,0 +1,16 @@
+@import "common";
+@import "compass/typography/vertical_rhythm";
+
+@mixin modular-font-size($factor, $i, $base-font-size, $lines:auto) {
+    @include adjust-font-size-to(pow(1/$factor, $i) * $base-font-size, $lines);
+}
+
+@mixin following-block-margin-leader($amount) {
+    @each $i in $textBlocks {
+        @each $j in $textBlocks {
+            #{$i} + #{$j} {
+                @include margin-leader(1);
+            }
+        }
+    }
+}

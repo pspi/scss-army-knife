@@ -1,13 +1,17 @@
+
+
+/*
+ * Note
+ *
+ * Try to use mixins instead of this file.
+ */
+
+
+@import "common";
+@import "reset-zurb-vertical-rhythm";
+@import "vertical-rhythm-spaces";
+@import "vertical-rhythm-mixin";
 @import "compass/typography/vertical_rhythm";
-
-$textBlocks: h1, h2, h4, h5, h6, p, img, ul, ol, figure, blockquote;
-
-// Reset
-
-#{$textBlocks} {
-    margin-top: 0;
-    margin-bottom: 0;
-}
 
 
 $base-font-size: 16px;
@@ -29,7 +33,7 @@ $factor: 3/4;
 
 @for $i from 1 through 6 {
     h#{$i}, .h#{$i} {
-        @include adjust-font-size-to(pow(1/$factor, 6 - $i) * $base-font-size);
+        @include modular-font-size($factor, 6 - $i, $base-font-size);
     }
     .h#{$i}-vh-landscape-ipad {
         font-size: pow(1/$factor, 6 - $i) * $base-font-size / 768px * 100vh;
@@ -47,65 +51,14 @@ p {
 }
 
 .small {
-    @include adjust-font-size-to(pow($factor, 1) * $base-font-size, 4/5);
+    @include modular-font-size($factor, -1, $base-font-size, 4/5);
 }
-
-// Space
-
-@for $i from 1 through 20 {
-    .margin-leader-#{$i} {
-        @include margin-leader($i);
-    }
-    .margin-trailer-#{$i} {
-        @include margin-trailer($i);
-    }
-    .margin-#{$i} {
-        @extend .margin-leader-#{$i};
-        @extend .margin-trailer-#{$i};
-    }
-    .padding-#{$i} {
-        padding: rhythm($i);
-    }
-}
-
-.margin {
-    @extend .margin-1;
-}
-
-.padding {
-    @extend .padding-1;
-}
-
-.padding-half {
-    padding: rhythm() / 2;
-}
-
-.padding-left {
-    padding-left: rhythm();
-}
-
-.padding-right {
-    padding-right: rhythm();
-}
-
-.top-open-padding {
-    @extend .padding;
-    padding-top: 0;
-}
-
-// Debug
 
 body {
+    // Debug
     // @include debug-vertical-alignment;
     // * { background-color: transparent !important; }
 }
 
 // Text spacing
-
-@each $i in $textBlocks {
-    @each $j in $textBlocks {
-        #{$i} + #{$j} {
-            @include margin-leader(1);
-        }
-    }
-}
+@include block-following-margin(rhythm());
