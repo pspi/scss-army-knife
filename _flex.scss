@@ -1,24 +1,32 @@
 @import "compass/css3/flexbox";
 
+@mixin flex-row {
+    @include display-flex;
+    @include flex-direction(row);
+}
+
+@mixin flex-column {
+    @include display-flex;
+    @include flex-direction(column);
+}
+
+@mixin flex-item {
+    @include flex-shrink(0);
+    @include flex-basis(0);
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
 $scss-army-knife-flex-alignments: flex-start flex-end center stretch baseline;
 $scss-army-knife-flex-justifications: flex-start flex-end center space-between space-around;
 
 .flex-row {
-    @include display-flex;
-    @include flex-direction(row);
-    // & > * {
-    //     min-width: 0;
-    //     overflow-x: hidden;
-    // }
+    @include flex-row
 }
 
 .flex-column {
-    @include display-flex;
-    @include flex-direction(column);
-    // & > * {
-    //     min-height: 0;
-    //     overflow-y: hidden;
-    // }
+    @include flex-column;
 }
 
 @each $direction in row column {
@@ -48,17 +56,9 @@ $scss-army-knife-flex-justifications: flex-start flex-end center space-between s
     }
 }
 
-.flex-item {
-    @include flex-shrink(0);
-    @include flex-basis(0);
-    min-height: 0;
-    min-width: 0;
-    overflow: hidden;
-}
-
 @for $i from 1 through 12 {
     .flex-item-grow-#{$i} {
-        @extend .flex-item;
+        @include flex-item;
         @include flex-grow($i);
     }
 }
