@@ -103,16 +103,19 @@ $colors: (
 );
 
 // extracted for own function to use outside this file
-@mixin color-class($name, $color) {
+@mixin color-class($name, $color, $alpha:1) {
     .#{$name} {
-        color: $color;
+        color: rgba($color, $alpha);
     }
 
     .#{$name}-bg {
-        background-color: $color;
+        background-color: rgba($color, $alpha);
     }
 }
 
 @each $name, $color in $colors {
     @include color-class($name, $color);
 }
+
+@include color-class(black-alpha-10, black, 0.10);
+@include color-class(black-alpha-05, black, 0.05);
