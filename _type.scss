@@ -1,0 +1,107 @@
+
+// INTERNAL: assert
+
+@mixin _assert_unit($value, $unit) {
+    $dummy: _assert_unit($value, $unit);
+}
+
+@function _assert_unit($value, $unit) {
+    @if unit($value) != $unit {
+        @error "unit for #{$value} must be #{$unit}";
+    }
+    @return $value;
+}
+
+@function _map_get($map, $key, $unit) {
+    @if not map-has-key($map, $key) {
+        @error "'#{$key}' missing";
+    }
+    $value: map-get($map, $key);
+    @return _assert_unit($value, $unit);
+}
+
+// INTERNAL: spec accessor
+
+@function _spec_pxlineheight($spec) {
+    @return _map_get($spec, size, px) * _map_get($spec, height, '');
+}
+
+@function _spec_factor($spec) {
+    @return _map_get($spec, factor, '')
+}
+
+@function _spec_size($spec) {
+    @return _map_get($spec, size, px)
+}
+
+// INTERNAL: math calc
+
+// these only take straights values in, no passing $spec
+
+@function _calc_pxfitlineheight($font-size, $line-height) {
+    $result: $line-height;
+    @while $result <= ($font-size - 2px) {
+        $result: $result + $line-height;
+    }
+    @return $result;
+}
+
+@function _calc_pxmodularsize($base, $factor, $times) {
+    @return pow(1/$factor, $times) * $base;
+}
+
+// INTERNAL: set css
+
+@mixin _set_sizeheight($font-size, $line-height) {
+    @include _assert_unit($font-size, 'px');
+    @include _assert_unit($line-height, 'px');
+    font-size: round($font-size);
+    line-height: round(_calc_pxfitlineheight($font-size, $line-height));
+}
+
+/*
+ * PUBLIC SPEC-API
+ */
+
+@mixin type-font-size($font-size, $spec) {
+    @include _assert_unit($font-size, 'px');
+    @include _set_sizeheight($font-size, _calc_pxfitlineheight($font-size, _spec_pxlineheight($spec)));
+}
+
+@mixin type-modular-font-size($times, $spec) {
+    $factor: _spec_factor($spec);
+    $base: _spec_size($spec);
+    $font-size: _calc_pxmodularsize($base, $factor, $times);
+    @include type-font-size($font-size, $spec);
+}
+
+@function type-rhythm($times, $spec, $offset: 0px) {
+    @return round($times * _spec_pxlineheight($spec) - _assert_unit($offset, 'px'));
+}
+
+@mixin type ($spec) {
+
+    @include type-modular-font-size(0, $spec);
+
+    @if map-has-key($spec, family) {
+        font-family: map-get($spec, family);
+    }
+
+    @if map-has-key($spec, tags) {
+
+        $factor: _spec_factor($spec);
+        @each $tag, $tagspec in map-get($spec, tags) {
+
+            $times: nth($tagspec, 1);
+            $top: nth($tagspec, 2);
+            $bottom: nth($tagspec, 3);
+
+            #{$tag} {
+                @include type-modular-font-size($times, $spec);
+                margin-top: type-rhythm($top, $spec);
+                margin-bottom: type-rhythm($bottom, $spec);
+            }
+        }
+    }
+
+}
