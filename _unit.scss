@@ -1,0 +1,7 @@
+// https://css-tricks.com/snippets/sass/px-to-em-functions/
+
+$browser-context: 16px; // Default
+
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
