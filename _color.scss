@@ -114,11 +114,11 @@ $colors: (
 // extracted for own function to use outside this file
 @mixin color-class($name, $color, $alpha:1) {
     .#{$name} {
-        color: rgba($color, $alpha);
+        color: rgba($color, $alpha) !important;
     }
 
     .#{$name}-bg {
-        background-color: rgba($color, $alpha);
+        background-color: rgba($color, $alpha) !important;
     }
 }
 
