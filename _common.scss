@@ -1,1 +1,3 @@
-$textBlocks: h1, h2, h4, h5, h6, p, img, ul, ol, figure, blockquote, code, pre;
+$headerBlocks: h1, h2, h3, h4, h5, h6;
+$paragraphBlocks: p, ul, ol, figure, blockquote, pre;
+$textBlocks: join($headerBlocks, $paragraphBlocks);
