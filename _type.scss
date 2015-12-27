@@ -38,10 +38,17 @@
 
 // these only take straights values in, no passing $spec
 
+$spec-line-height-breathing-room-pct: 0.15 !default;
+$spec-line-height-use-half-widths: true !default;
+
 @function _calc_pxfitlineheight($font-size, $line-height) {
     $result: $line-height;
-    @while $result <= ($font-size - 2px) {
-        $result: $result + $line-height;
+    @while ($result < $font-size or (($result - $font-size) / $result) < $spec-line-height-breathing-room-pct) {
+        @if ($spec-line-height-use-half-widths) {
+            $result: $result + ($line-height/2);
+        } @else {
+            $result: $result + $line-height;
+        }
     }
     @return $result;
 }
